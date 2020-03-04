@@ -35,6 +35,8 @@ speed-measure-plugin.json
 **/.obj/*
 **/bin/*
 **/obj/*
+**/appsettings.json
+**/appsettings.Development.json
 
 # misc
 /.sass-cache
@@ -52,4 +54,3 @@ testem.log
 Thumbs.db
 
 # Security
-
