@@ -15,7 +15,7 @@ export default class Admin extends Component {
             <Registro />
           </div>
 
-          <div class="col-sm-7">
+          <div className="col-sm-7">
             <Usuarios />
           </div>
         </div>

@@ -6,8 +6,8 @@ export default class Usuarios extends Component {
   render() {
     return (
       <div>
-        <div class="card mb-1">
-          <div class="card-body d-flex text-white bg-dark">
+        <div className="card mb-1">
+          <div className="card-body d-flex text-white bg-dark">
 
             <div className="col-sm-3">Cedula</div>
             <div className="col-sm-3">Nombre</div>
