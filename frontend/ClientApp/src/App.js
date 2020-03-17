@@ -6,7 +6,7 @@ import Navigation from './components/shared/Navigation';
 import Home from './components/Home/Home';
 import Login from './components/Login';
 import Admin from './components/Admin/Admin';
-
+import Inventario from './components/Inventario/Inventario';
 export default class App extends Component {
   render() {
     return (
@@ -18,7 +18,7 @@ export default class App extends Component {
           <Route path="/" component={ Home } exact />
           <Route path="/login" component={ Login } />
           <Route path="/admin" component={ Admin } />
-
+          <Route path="/Inventario" component={ Inventario } />
         </Router>
       </div>
     )

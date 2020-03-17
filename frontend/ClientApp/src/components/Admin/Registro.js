@@ -1,6 +1,9 @@
 import React, { Component } from 'react'
 
 export default class Registro extends Component {
+ 
+
+  
   render() {
     return (
       <div>
@@ -17,8 +20,13 @@ export default class Registro extends Component {
         </div>
 
         <div className="form-group">
-          <label htmlFor="nDocumnto_id" className="control-label">Tipo de documento</label>
-          <select className="form-control" id="nDocumento_id">
+          <label className="control-label">Fecha de contratacion</label>
+          <input type="text" className="form-control" id="fechaContratacon" name="Edad" />
+        </div>
+
+        <div className="form-group">
+          <label htmlFor="Genero_id" className="control-label">Genero</label>
+          <select className="form-control" id="Genero_id">
             <option value="Masculino">Masculino</option>
             <option value="Femenino">Femenino</option>
             <option value="Otro">Otro</option>
@@ -26,8 +34,8 @@ export default class Registro extends Component {
         </div>
 
         <div className="form-group">
-          <label htmlFor="documento_id" className="control-label">Numero de documento</label>
-          <input type="text" className="form-control" id="documento_id" name="nDocumento" />
+          <label htmlFor="id" className="control-label">Numero de documento</label>
+          <input type="text" className="form-control" id="id" name="nDocumento" />
         </div>
 
         <div className="form-group">
@@ -54,8 +62,8 @@ export default class Registro extends Component {
         </div>
 
         <div className="form-group">
-          <label htmlFor="Clave_id" className="control-label">Clave</label>
-          <input type="text" className="form-control" id="zip_id" name="calve" />
+          <label htmlFor="clave" className="control-label">Clave</label>
+          <input type="text" className="form-control" id="clave" name="calve" />
         </div>
 
         <div className="form-group">
