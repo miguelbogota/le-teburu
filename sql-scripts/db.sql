@@ -53,15 +53,15 @@ CREATE TABLE Pais (
 );
 GO
 
--- Creacion de la tabla de direcciones
-CREATE TABLE Direccion (
-  IdDireccion NUMERIC(7) IDENTITY(1,1) PRIMARY KEY,
-  Direccion NVARCHAR(30) NOT NULL,
-  CiudadSedeFK NUMERIC(4) NOT NULL,
-  PaisSedeFK NUMERIC(3) NOT NULL,
+-- Creacion de la tabla de ubicaciones
+CREATE TABLE Ubicacion (
+  IdUbicacion NUMERIC(7) IDENTITY(1,1) PRIMARY KEY,
+  DireccionUbicacion NVARCHAR(30) NOT NULL,
+  CiudadUbicacionFK NUMERIC(4) NOT NULL,
+  PaisUbicacionFK NUMERIC(3) NOT NULL,
   
-  FOREIGN KEY (CiudadSedeFK) REFERENCES Ciudad(IdCiudad),
-  FOREIGN KEY (PaisSedeFK) REFERENCES Pais(IdPais)
+  FOREIGN KEY (CiudadUbicacionFK) REFERENCES Ciudad(IdCiudad),
+  FOREIGN KEY (PaisUbicacionFK) REFERENCES Pais(IdPais)
 );
 GO
 
@@ -69,9 +69,9 @@ GO
 CREATE TABLE Sede (
   IdSede NUMERIC(1) IDENTITY(1,1) PRIMARY KEY,
   NombreSede NVARCHAR(40) NOT NULL,
-  DireccionSedeFK NUMERIC(7) NOT NULL,
+  UbicacionSedeFK NUMERIC(7) NOT NULL,
 
-  FOREIGN KEY (DireccionSedeFK) REFERENCES Direccion(IdDireccion)
+  FOREIGN KEY (UbicacionSedeFK) REFERENCES Ubicacion(IdUbicacion)
 );
 GO
 
@@ -82,12 +82,12 @@ CREATE TABLE Datos (
   FechaNacimiento DATE NOT NULL,
   Telefono NUMERIC(10) NOT NULL,
   GeneroFK NUMERIC(1)  NOT NULL,
-  TiposDocumentoFK NUMERIC(2) NOT NULL,
-  DireccionFK NUMERIC(7) NOT NULL,
+  TipoDocumentoFK NUMERIC(2) NOT NULL,
+  UbicacionFK NUMERIC(7) NOT NULL,
   
   FOREIGN KEY (GeneroFK) REFERENCES Genero(IdGenero),
-  FOREIGN KEY (TiposDocumentoFK) REFERENCES TipoDocumento(IdTipoDocumento),
-  FOREIGN KEY (DireccionFK) REFERENCES Direccion(IdDireccion)
+  FOREIGN KEY (TipoDocumentoFK) REFERENCES TipoDocumento(IdTipoDocumento),
+  FOREIGN KEY (UbicacionFK) REFERENCES Ubicacion(IdUbicacion)
 );
 GO
 
@@ -95,7 +95,7 @@ GO
 CREATE TABLE Empleado (
   IdEmpleado NUMERIC(8) PRIMARY KEY,
   ClaveEmpleado NVARCHAR(50) NOT NULL,
-  FechaContrato DATETIME NOT NULL,
+  FechaContratoEmpleado DATETIME NOT NULL,
   DatosEmpleadoFK NUMERIC(14) NOT NULL,
   RolEmpleadoFK NUMERIC(2) NOT NULL,
   SedeEmpleadoFK NUMERIC(1) NOT NULL,

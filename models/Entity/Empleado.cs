@@ -9,7 +9,7 @@ namespace models.Entity {
 
     public decimal IdEmpleado { get; set; }
     public string ClaveEmpleado { get; set; }
-    public DateTime FechaContrato { get; set; }
+    public DateTime FechaContratoEmpleado { get; set; }
     public decimal DatosEmpleadoFk { get; set; }
     public decimal RolEmpleadoFk { get; set; }
     public decimal SedeEmpleadoFk { get; set; }

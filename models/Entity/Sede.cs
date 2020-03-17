@@ -10,9 +10,9 @@ namespace models.Entity {
 
     public decimal IdSede { get; set; }
     public string NombreSede { get; set; }
-    public decimal DireccionSedeFk { get; set; }
+    public decimal UbicacionSedeFk { get; set; }
 
-    public virtual Direccion DireccionSedeFkNavigation { get; set; }
+    public virtual Ubicacion UbicacionSedeFkNavigation { get; set; }
     public virtual ICollection<Empleado> Empleado { get; set; }
     public virtual ICollection<Inventario> Inventario { get; set; }
   }

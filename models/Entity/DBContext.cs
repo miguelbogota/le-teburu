@@ -14,7 +14,6 @@ namespace models.Entity {
     public virtual DbSet<Categoria> Categoria { get; set; }
     public virtual DbSet<Ciudad> Ciudad { get; set; }
     public virtual DbSet<Datos> Datos { get; set; }
-    public virtual DbSet<Direccion> Direccion { get; set; }
     public virtual DbSet<Empleado> Empleado { get; set; }
     public virtual DbSet<EstadoEmpleado> EstadoEmpleado { get; set; }
     public virtual DbSet<EstadoMenu> EstadoMenu { get; set; }
@@ -30,6 +29,7 @@ namespace models.Entity {
     public virtual DbSet<Rol> Rol { get; set; }
     public virtual DbSet<Sede> Sede { get; set; }
     public virtual DbSet<TipoDocumento> TipoDocumento { get; set; }
+    public virtual DbSet<Ubicacion> Ubicacion { get; set; }
     public virtual DbSet<Venta> Venta { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) {
@@ -41,7 +41,7 @@ namespace models.Entity {
     protected override void OnModelCreating(ModelBuilder modelBuilder) {
       modelBuilder.Entity<Categoria>(entity => {
         entity.HasKey(e => e.IdCategoria)
-            .HasName("PK__Categori__A3C02A1084ACD518");
+            .HasName("PK__Categori__A3C02A109B359D7A");
 
         entity.Property(e => e.IdCategoria)
             .HasColumnType("numeric(2, 0)")
@@ -54,7 +54,7 @@ namespace models.Entity {
 
       modelBuilder.Entity<Ciudad>(entity => {
         entity.HasKey(e => e.IdCiudad)
-            .HasName("PK__Ciudad__D4D3CCB0BE8E5A9D");
+            .HasName("PK__Ciudad__D4D3CCB015758056");
 
         entity.Property(e => e.IdCiudad)
             .HasColumnType("numeric(4, 0)")
@@ -67,13 +67,9 @@ namespace models.Entity {
 
       modelBuilder.Entity<Datos>(entity => {
         entity.HasKey(e => e.Documento)
-            .HasName("PK__Datos__AF73706C127CAE01");
+            .HasName("PK__Datos__AF73706C84B6B212");
 
         entity.Property(e => e.Documento).HasColumnType("numeric(14, 0)");
-
-        entity.Property(e => e.DireccionFk)
-            .HasColumnName("DireccionFK")
-            .HasColumnType("numeric(7, 0)");
 
         entity.Property(e => e.FechaNacimiento).HasColumnType("date");
 
@@ -87,15 +83,13 @@ namespace models.Entity {
 
         entity.Property(e => e.Telefono).HasColumnType("numeric(10, 0)");
 
-        entity.Property(e => e.TiposDocumentoFk)
-            .HasColumnName("TiposDocumentoFK")
+        entity.Property(e => e.TipoDocumentoFk)
+            .HasColumnName("TipoDocumentoFK")
             .HasColumnType("numeric(2, 0)");
 
-        entity.HasOne(d => d.DireccionFkNavigation)
-            .WithMany(p => p.Datos)
-            .HasForeignKey(d => d.DireccionFk)
-            .OnDelete(DeleteBehavior.ClientSetNull)
-            .HasConstraintName("FK__Datos__Direccion__4BAC3F29");
+        entity.Property(e => e.UbicacionFk)
+            .HasColumnName("UbicacionFK")
+            .HasColumnType("numeric(7, 0)");
 
         entity.HasOne(d => d.GeneroFkNavigation)
             .WithMany(p => p.Datos)
@@ -103,50 +97,22 @@ namespace models.Entity {
             .OnDelete(DeleteBehavior.ClientSetNull)
             .HasConstraintName("FK__Datos__GeneroFK__49C3F6B7");
 
-        entity.HasOne(d => d.TiposDocumentoFkNavigation)
+        entity.HasOne(d => d.TipoDocumentoFkNavigation)
             .WithMany(p => p.Datos)
-            .HasForeignKey(d => d.TiposDocumentoFk)
+            .HasForeignKey(d => d.TipoDocumentoFk)
             .OnDelete(DeleteBehavior.ClientSetNull)
-            .HasConstraintName("FK__Datos__TiposDocu__4AB81AF0");
-      });
+            .HasConstraintName("FK__Datos__TipoDocum__4AB81AF0");
 
-      modelBuilder.Entity<Direccion>(entity => {
-        entity.HasKey(e => e.IdDireccion)
-            .HasName("PK__Direccio__1F8E0C7647CCD3D8");
-
-        entity.Property(e => e.IdDireccion)
-            .HasColumnType("numeric(7, 0)")
-            .ValueGeneratedOnAdd();
-
-        entity.Property(e => e.CiudadSedeFk)
-            .HasColumnName("CiudadSedeFK")
-            .HasColumnType("numeric(4, 0)");
-
-        entity.Property(e => e.Direccion1)
-            .IsRequired()
-            .HasColumnName("Direccion")
-            .HasMaxLength(30);
-
-        entity.Property(e => e.PaisSedeFk)
-            .HasColumnName("PaisSedeFK")
-            .HasColumnType("numeric(3, 0)");
-
-        entity.HasOne(d => d.CiudadSedeFkNavigation)
-            .WithMany(p => p.Direccion)
-            .HasForeignKey(d => d.CiudadSedeFk)
+        entity.HasOne(d => d.UbicacionFkNavigation)
+            .WithMany(p => p.Datos)
+            .HasForeignKey(d => d.UbicacionFk)
             .OnDelete(DeleteBehavior.ClientSetNull)
-            .HasConstraintName("FK__Direccion__Ciuda__4316F928");
-
-        entity.HasOne(d => d.PaisSedeFkNavigation)
-            .WithMany(p => p.Direccion)
-            .HasForeignKey(d => d.PaisSedeFk)
-            .OnDelete(DeleteBehavior.ClientSetNull)
-            .HasConstraintName("FK__Direccion__PaisS__440B1D61");
+            .HasConstraintName("FK__Datos__Ubicacion__4BAC3F29");
       });
 
       modelBuilder.Entity<Empleado>(entity => {
         entity.HasKey(e => e.IdEmpleado)
-            .HasName("PK__Empleado__CE6D8B9EC305BAC6");
+            .HasName("PK__Empleado__CE6D8B9E6D49F727");
 
         entity.Property(e => e.IdEmpleado).HasColumnType("numeric(8, 0)");
 
@@ -162,7 +128,7 @@ namespace models.Entity {
             .HasColumnName("EstadoEmpleadoFK")
             .HasColumnType("numeric(1, 0)");
 
-        entity.Property(e => e.FechaContrato).HasColumnType("datetime");
+        entity.Property(e => e.FechaContratoEmpleado).HasColumnType("datetime");
 
         entity.Property(e => e.RolEmpleadoFk)
             .HasColumnName("RolEmpleadoFK")
@@ -199,7 +165,7 @@ namespace models.Entity {
 
       modelBuilder.Entity<EstadoEmpleado>(entity => {
         entity.HasKey(e => e.IdEstadoEmpleado)
-            .HasName("PK__EstadoEm__4ECA3F3323177F87");
+            .HasName("PK__EstadoEm__4ECA3F3368AB50DC");
 
         entity.Property(e => e.IdEstadoEmpleado)
             .HasColumnType("numeric(1, 0)")
@@ -212,7 +178,7 @@ namespace models.Entity {
 
       modelBuilder.Entity<EstadoMenu>(entity => {
         entity.HasKey(e => e.IdEstadoMenu)
-            .HasName("PK__EstadoMe__49521E5066EAF663");
+            .HasName("PK__EstadoMe__49521E500AE2FC5F");
 
         entity.Property(e => e.IdEstadoMenu)
             .HasColumnType("numeric(1, 0)")
@@ -225,7 +191,7 @@ namespace models.Entity {
 
       modelBuilder.Entity<EstadoProducto>(entity => {
         entity.HasKey(e => e.IdEstadoProducto)
-            .HasName("PK__EstadoPr__F02FAF37A61A9F1A");
+            .HasName("PK__EstadoPr__F02FAF37A01F9529");
 
         entity.Property(e => e.IdEstadoProducto)
             .HasColumnType("numeric(1, 0)")
@@ -238,7 +204,7 @@ namespace models.Entity {
 
       modelBuilder.Entity<EstadoVenta>(entity => {
         entity.HasKey(e => e.IdEstadoVenta)
-            .HasName("PK__EstadoVe__777FD960A360AB27");
+            .HasName("PK__EstadoVe__777FD96034D76CEE");
 
         entity.Property(e => e.IdEstadoVenta)
             .HasColumnType("numeric(1, 0)")
@@ -251,7 +217,7 @@ namespace models.Entity {
 
       modelBuilder.Entity<Genero>(entity => {
         entity.HasKey(e => e.IdGenero)
-            .HasName("PK__Genero__0F834988F1F89807");
+            .HasName("PK__Genero__0F834988BF1FFF4C");
 
         entity.Property(e => e.IdGenero)
             .HasColumnType("numeric(1, 0)")
@@ -264,7 +230,7 @@ namespace models.Entity {
 
       modelBuilder.Entity<Inventario>(entity => {
         entity.HasKey(e => e.IdInventario)
-            .HasName("PK__Inventar__1927B20CFA214120");
+            .HasName("PK__Inventar__1927B20CD276F135");
 
         entity.Property(e => e.IdInventario)
             .HasColumnType("numeric(5, 0)")
@@ -299,7 +265,7 @@ namespace models.Entity {
 
       modelBuilder.Entity<Menu>(entity => {
         entity.HasKey(e => e.IdMenu)
-            .HasName("PK__Menu__4D7EA8E194C89864");
+            .HasName("PK__Menu__4D7EA8E1D4DEA30A");
 
         entity.Property(e => e.IdMenu)
             .HasColumnType("numeric(2, 0)")
@@ -334,7 +300,7 @@ namespace models.Entity {
 
       modelBuilder.Entity<Pais>(entity => {
         entity.HasKey(e => e.IdPais)
-            .HasName("PK__Pais__FC850A7B1EFFC29D");
+            .HasName("PK__Pais__FC850A7B8A77F4F8");
 
         entity.Property(e => e.IdPais)
             .HasColumnType("numeric(3, 0)")
@@ -347,7 +313,7 @@ namespace models.Entity {
 
       modelBuilder.Entity<Pedido>(entity => {
         entity.HasKey(e => e.IdPedido)
-            .HasName("PK__Pedido__9D335DC3D96B1958");
+            .HasName("PK__Pedido__9D335DC3770FC774");
 
         entity.Property(e => e.IdPedido)
             .HasColumnType("numeric(5, 0)")
@@ -380,7 +346,7 @@ namespace models.Entity {
 
       modelBuilder.Entity<Producto>(entity => {
         entity.HasKey(e => e.IdProducto)
-            .HasName("PK__Producto__09889210ACAE6778");
+            .HasName("PK__Producto__09889210DE7E886C");
 
         entity.Property(e => e.IdProducto)
             .HasColumnType("numeric(3, 0)")
@@ -424,7 +390,7 @@ namespace models.Entity {
 
       modelBuilder.Entity<Proveedor>(entity => {
         entity.HasKey(e => e.IdProveedor)
-            .HasName("PK__Proveedo__E8B631AF068847DD");
+            .HasName("PK__Proveedo__E8B631AF645E9A13");
 
         entity.Property(e => e.IdProveedor).HasColumnType("numeric(3, 0)");
 
@@ -437,7 +403,7 @@ namespace models.Entity {
 
       modelBuilder.Entity<Rol>(entity => {
         entity.HasKey(e => e.IdRol)
-            .HasName("PK__Rol__2A49584C8D466467");
+            .HasName("PK__Rol__2A49584C5C59007A");
 
         entity.Property(e => e.IdRol)
             .HasColumnType("numeric(2, 0)")
@@ -450,30 +416,30 @@ namespace models.Entity {
 
       modelBuilder.Entity<Sede>(entity => {
         entity.HasKey(e => e.IdSede)
-            .HasName("PK__Sede__A7780DFFAF30B7BC");
+            .HasName("PK__Sede__A7780DFFDF953CC1");
 
         entity.Property(e => e.IdSede)
             .HasColumnType("numeric(1, 0)")
             .ValueGeneratedOnAdd();
 
-        entity.Property(e => e.DireccionSedeFk)
-            .HasColumnName("DireccionSedeFK")
-            .HasColumnType("numeric(7, 0)");
-
         entity.Property(e => e.NombreSede)
             .IsRequired()
             .HasMaxLength(40);
 
-        entity.HasOne(d => d.DireccionSedeFkNavigation)
+        entity.Property(e => e.UbicacionSedeFk)
+            .HasColumnName("UbicacionSedeFK")
+            .HasColumnType("numeric(7, 0)");
+
+        entity.HasOne(d => d.UbicacionSedeFkNavigation)
             .WithMany(p => p.Sede)
-            .HasForeignKey(d => d.DireccionSedeFk)
+            .HasForeignKey(d => d.UbicacionSedeFk)
             .OnDelete(DeleteBehavior.ClientSetNull)
-            .HasConstraintName("FK__Sede__DireccionS__46E78A0C");
+            .HasConstraintName("FK__Sede__UbicacionS__46E78A0C");
       });
 
       modelBuilder.Entity<TipoDocumento>(entity => {
         entity.HasKey(e => e.IdTipoDocumento)
-            .HasName("PK__TipoDocu__3AB3332FCFF56A61");
+            .HasName("PK__TipoDocu__3AB3332FD6E65D4D");
 
         entity.Property(e => e.IdTipoDocumento)
             .HasColumnType("numeric(2, 0)")
@@ -484,9 +450,42 @@ namespace models.Entity {
             .HasMaxLength(30);
       });
 
+      modelBuilder.Entity<Ubicacion>(entity => {
+        entity.HasKey(e => e.IdUbicacion)
+            .HasName("PK__Ubicacio__778CAB1D5438FAD5");
+
+        entity.Property(e => e.IdUbicacion)
+            .HasColumnType("numeric(7, 0)")
+            .ValueGeneratedOnAdd();
+
+        entity.Property(e => e.CiudadUbicacionFk)
+            .HasColumnName("CiudadUbicacionFK")
+            .HasColumnType("numeric(4, 0)");
+
+        entity.Property(e => e.DireccionUbicacion)
+            .IsRequired()
+            .HasMaxLength(30);
+
+        entity.Property(e => e.PaisUbicacionFk)
+            .HasColumnName("PaisUbicacionFK")
+            .HasColumnType("numeric(3, 0)");
+
+        entity.HasOne(d => d.CiudadUbicacionFkNavigation)
+            .WithMany(p => p.Ubicacion)
+            .HasForeignKey(d => d.CiudadUbicacionFk)
+            .OnDelete(DeleteBehavior.ClientSetNull)
+            .HasConstraintName("FK__Ubicacion__Ciuda__4316F928");
+
+        entity.HasOne(d => d.PaisUbicacionFkNavigation)
+            .WithMany(p => p.Ubicacion)
+            .HasForeignKey(d => d.PaisUbicacionFk)
+            .OnDelete(DeleteBehavior.ClientSetNull)
+            .HasConstraintName("FK__Ubicacion__PaisU__440B1D61");
+      });
+
       modelBuilder.Entity<Venta>(entity => {
         entity.HasKey(e => e.IdVenta)
-            .HasName("PK__Venta__BC1240BD7EEB2E71");
+            .HasName("PK__Venta__BC1240BD53C7D693");
 
         entity.Property(e => e.IdVenta)
             .HasColumnType("numeric(6, 0)")
