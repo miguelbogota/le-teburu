@@ -1,212 +1,157 @@
 ﻿-- Eliminar la sb si existe
-USE master;
-IF EXISTS (SELECT * FROM sys.databases WHERE name='teburuDB') DROP DATABASE teburuDB;
+USE master
+IF EXISTS (SELECT * FROM sys.databases WHERE name='teburuDB') DROP DATABASE teburuDB
 GO
 
 -- Creacion de la base de datos
-CREATE DATABASE teburuDB;
+CREATE DATABASE teburuDB
 GO
 
 -- Usar la base de datos
-USE teburuDB;
-GO
-
--- Creacion de la tabla de generos
-CREATE TABLE Genero (
-  IdGenero NUMERIC(1) IDENTITY(1,1) PRIMARY KEY,
-  NombreGenero NVARCHAR(9) NOT NULL
-);
-GO
-
--- Creacion de la tabla de tipo de documentos
-CREATE TABLE TipoDocumento (
-  IdTipoDocumento NUMERIC(2) IDENTITY(1,1) PRIMARY KEY,
-  NombreTipoDocumento NVARCHAR(30) NOT NULL
-);
-GO
-
--- Creacion de la tabla de los roles
-CREATE TABLE Rol (
-  IdRol NUMERIC(2) IDENTITY(1,1) PRIMARY KEY,
-  NombreRol NVARCHAR(30) NOT NULL
-);
-GO
-
--- Creacion de la tabla de estados de los empleados
-CREATE TABLE EstadoEmpleado (
-  IdEstadoEmpleado NUMERIC(1) IDENTITY(1,1) PRIMARY KEY,
-  NombreEstadoEmpleado NVARCHAR(20) NOT NULL
-);
-GO
-
--- Creacion de la tabla de las ciudades
-CREATE TABLE Ciudad (
-  IdCiudad NUMERIC(4) IDENTITY(1,1) PRIMARY KEY,
-  NombreCiudad NVARCHAR(30) NOT NULL
-);
-GO
-
--- Creacion de la tabla de los paises
-CREATE TABLE Pais (
-  IdPais NUMERIC(3) IDENTITY(1,1) PRIMARY KEY,
-  NombrePais NVARCHAR(30) NOT NULL
-);
-GO
-
--- Creacion de la tabla de ubicaciones
-CREATE TABLE Ubicacion (
-  IdUbicacion NUMERIC(7) IDENTITY(1,1) PRIMARY KEY,
-  DireccionUbicacion NVARCHAR(30) NOT NULL,
-  CiudadUbicacionFK NUMERIC(4) NOT NULL,
-  PaisUbicacionFK NUMERIC(3) NOT NULL,
-  
-  FOREIGN KEY (CiudadUbicacionFK) REFERENCES Ciudad(IdCiudad),
-  FOREIGN KEY (PaisUbicacionFK) REFERENCES Pais(IdPais)
-);
+USE teburuDB
 GO
 
 -- Creacion de la tabla de sedes
-CREATE TABLE Sede (
-  IdSede NUMERIC(1) IDENTITY(1,1) PRIMARY KEY,
-  NombreSede NVARCHAR(40) NOT NULL,
-  UbicacionSedeFK NUMERIC(7) NOT NULL,
+CREATE TABLE Restaurante (
+  Id NUMERIC(3) IDENTITY(1,1) PRIMARY KEY,
+  Nombre NVARCHAR(60) NOT NULL,
+  Telefono NUMERIC(10) NOT NULL,
+  HoraApertura TIME NOT NULL,
+  HoraCierre TIME NOT NULL,
 
-  FOREIGN KEY (UbicacionSedeFK) REFERENCES Ubicacion(IdUbicacion)
-);
+  Direccion NVARCHAR(100) NOT NULL,
+  Ciudad NVARCHAR(100) NOT NULL,
+  Pais NVARCHAR(100) NOT NULL,
+)
 GO
 
--- Creacion de la tabla de datos
-CREATE TABLE Datos (
-  Documento NUMERIC(14) PRIMARY KEY,
-  Nombre NVARCHAR(50) NOT NULL,
+-- Creacion de la tabla de datos de las personas
+CREATE TABLE Persona (
+  Documento NUMERIC(15) PRIMARY KEY,
+  TipoDocumento NVARCHAR(100) NOT NULL,
+
+  Nombre NVARCHAR(70) NOT NULL,
+  Apellido NVARCHAR(70) NOT NULL,
+  Genero CHAR(1)  NOT NULL,
   FechaNacimiento DATE NOT NULL,
+
   Telefono NUMERIC(10) NOT NULL,
-  GeneroFK NUMERIC(1)  NOT NULL,
-  TipoDocumentoFK NUMERIC(2) NOT NULL,
-  UbicacionFK NUMERIC(7) NOT NULL,
-  
-  FOREIGN KEY (GeneroFK) REFERENCES Genero(IdGenero),
-  FOREIGN KEY (TipoDocumentoFK) REFERENCES TipoDocumento(IdTipoDocumento),
-  FOREIGN KEY (UbicacionFK) REFERENCES Ubicacion(IdUbicacion)
-);
+  Correo NVARCHAR(50) NOT NULL,
+  Direccion NVARCHAR(100) NOT NULL,
+  Ciudad NVARCHAR(100) NOT NULL,
+  Pais NVARCHAR(100) NOT NULL,
+)
 GO
 
 -- Creacion de la tabla de empleado
 CREATE TABLE Empleado (
-  IdEmpleado NUMERIC(8) PRIMARY KEY,
-  ClaveEmpleado NVARCHAR(50) NOT NULL,
-  FechaContratoEmpleado DATETIME NOT NULL,
-  DatosEmpleadoFK NUMERIC(14) NOT NULL,
-  RolEmpleadoFK NUMERIC(2) NOT NULL,
-  SedeEmpleadoFK NUMERIC(1) NOT NULL,
-  EstadoEmpleadoFK NUMERIC(1) NOT NULL,
- 
-  FOREIGN KEY (DatosEmpleadoFK) REFERENCES Datos(Documento),
-  FOREIGN KEY (RolEmpleadoFK) REFERENCES Rol(IdRol),
-  FOREIGN KEY (SedeEmpleadoFK) REFERENCES Sede(IdSede),
-  FOREIGN KEY (EstadoEmpleadoFK) REFERENCES EstadoEmpleado(IdEstadoEmpleado)
-);
-GO
+  Id NUMERIC(8) PRIMARY KEY,
+  Contrasena NVARCHAR(50) NOT NULL,
+  Cargo NVARCHAR(40) NOT NULL,
+  EstadoActual CHAR(1) NOT NULL,
 
--- Creacion de la tabla de estados de los menus
-CREATE TABLE EstadoMenu (
-  IdEstadoMenu NUMERIC(1) IDENTITY(1,1) PRIMARY KEY,
-  NombreEstadoMenu NVARCHAR(20) NOT NULL
-);
+  Salario MONEY NOT NULL,
+  TipoContrato NVARCHAR(40) NOT NULL,
+  FechaContratacion DATETIME NOT NULL,
+
+  PersonaId NUMERIC(15) NOT NULL,
+  RestauranteId NUMERIC(3) NOT NULL,
+
+  FOREIGN KEY (PersonaId) REFERENCES Persona(Documento),
+  FOREIGN KEY (RestauranteId) REFERENCES Restaurante(Id)
+)
 GO
 
 -- Creacion de la tabla de categorias
 CREATE TABLE Categoria (
-  IdCategoria NUMERIC(2) IDENTITY(1,1) PRIMARY KEY,
-  NombreCategoria NVARCHAR(40) NOT NULL
-);
+  Id NUMERIC(2) IDENTITY(1,1) PRIMARY KEY,
+  Nombre NVARCHAR(40) NOT NULL,
+  Descripcion NVARCHAR(200) NOT NULL
+)
 GO
 
 -- Creacion de la tabla del menu
 CREATE TABLE Menu (
-  IdMenu NUMERIC(2) IDENTITY(1,1) PRIMARY KEY,
-  NombreMenu NVARCHAR(50) NOT NULL,
-  PrecioMenu MONEY NOT NULL,
-  CategoriaMenuFK NUMERIC(2) NOT NULL,
-  EstadoMenuFK NUMERIC(1) NOT NULL,
+  Id NUMERIC(2) IDENTITY(1,1) PRIMARY KEY,
+  Nombre NVARCHAR(50) NOT NULL,
+  Precio MONEY NOT NULL,
+  Estado CHAR(1) NOT NULL,
+  CategoriaId NUMERIC(2) NOT NULL,
 
-  FOREIGN KEY (CategoriaMenuFK) REFERENCES Categoria(IdCategoria),
-  FOREIGN KEY (EstadoMenuFK) REFERENCES EstadoMenu(IdEstadoMenu)
-);
+  FOREIGN KEY (CategoriaId) REFERENCES Categoria(Id)
+)
 GO
 
--- Creacion de la tabla de estados de los productos
-CREATE TABLE EstadoProducto (
-  IdEstadoProducto NUMERIC(1) IDENTITY(1,1) PRIMARY KEY,
-  NombreEstadoProducto NVARCHAR(20) NOT NULL
-);
-GO
-
- -- Creacion de la tabla de proveedor
- CREATE TABLE Proveedor (
-  IdProveedor NUMERIC(3) PRIMARY KEY,
-  NombreProveedor NVARCHAR(50) NOT NULL,
-  ContactoProveedor NUMERIC(10) NOT NULL
-);
-GO
- 
--- Creacion de la tabla de productos
-CREATE TABLE Producto (
-  IdProducto NUMERIC(3) IDENTITY(1,1) PRIMARY KEY,
-  NombreProducto NVARCHAR(50) NOT NULL,
-  PrecioProducto MONEY NOT NULL,
-  ProveedorProductoFK NUMERIC(3) NOT NULL,
-  EstadoProductoFK NUMERIC(1) NOT NULL,
-  MenuFK NUMERIC(2),
-
-  FOREIGN KEY (ProveedorProductoFK) REFERENCES Proveedor(IdProveedor),
-  FOREIGN KEY (EstadoProductoFK) REFERENCES EstadoProducto(IdEstadoProducto),
-  FOREIGN KEY (MenuFK) REFERENCES Menu(IdMenu)
-);
+-- Creacion de la tabla de proveedor
+CREATE TABLE Proveedor (
+  Id NUMERIC(3) PRIMARY KEY,
+  Nombre NVARCHAR(50) NOT NULL,
+  Telefono NUMERIC(10) NOT NULL
+)
 GO
 
 -- Creacion de la tabla de inventario
 CREATE TABLE Inventario (
-  IdInventario NUMERIC(5) IDENTITY(1,1) PRIMARY KEY NOT NULL,
-  FechaIngresoInventario DATE NOT NULL,
-  PrecioTotalInventario MONEY NOT NULL,
-  CantidadInventario NUMERIC(5) NOT NULL,
-  ProductoInventarioFK NUMERIC(3) NOT NULL,
-  SedeInventarioFK NUMERIC(1) NOT NULL,
+  Id NUMERIC(5) IDENTITY(1,1) PRIMARY KEY,
+  FechaIngreso DATE NOT NULL,
+  PrecioTotal MONEY NOT NULL,
+  Cantidad NUMERIC(5) NOT NULL,
 
-  FOREIGN KEY (ProductoInventarioFK) REFERENCES Producto(IdProducto),
-  FOREIGN KEY (SedeInventarioFK) REFERENCES Sede(IdSede),
-);
+  RestauranteId NUMERIC(3) NOT NULL,
+
+  FOREIGN KEY (RestauranteId) REFERENCES Restaurante(Id)
+)
+GO
+ 
+-- Creacion de la tabla de productos
+CREATE TABLE Producto (
+  Id NUMERIC(3) IDENTITY(1,1) PRIMARY KEY,
+  Nombre NVARCHAR(50) NOT NULL,
+  Precio MONEY NOT NULL,
+  Estado CHAR(1) NOT NULL,
+
+  MenuId NUMERIC(2),
+  ProveedorId NUMERIC(3) NOT NULL,
+  InventarioId NUMERIC(5) NOT NULL,
+
+  FOREIGN KEY (MenuId) REFERENCES Menu(Id),
+  FOREIGN KEY (ProveedorId) REFERENCES Proveedor(Id),
+  FOREIGN KEY (InventarioId) REFERENCES Inventario(ID)
+)
 GO
 
--- Creacion de la tabla de estados de los productos
+-- Creacion de la tabla de estados de las ventas
 CREATE TABLE EstadoVenta (
-  IdEstadoVenta NUMERIC(1) IDENTITY(1,1) PRIMARY KEY,
-  NombreEstadoVenta NVARCHAR(20) NOT NULL
-);
+  Id NUMERIC(2) IDENTITY(1,1) PRIMARY KEY,
+  Nombre NVARCHAR(20) NOT NULL,
+  Descripcion NVARCHAR(200) NOT NULL,
+)
 GO
 
 -- Creacion de la tabla de ventas
-CREATE TABLE Venta ( 
-  IdVenta NUMERIC(6) IDENTITY(1,1) PRIMARY KEY NOT NULL,
-  FechaVenta DATE NOT NULL,
-  PrecioTotalVenta MONEY NOT NULL,
-  EmpleadoVentaFK NUMERIC(8) NOT NULL,
-  EstadoVentaFK NUMERIC(1) NOT NULL,
+CREATE TABLE Venta (
+  Id NUMERIC(8) PRIMARY KEY,
+  Fecha DATETIME NOT NULL,
+  PrecioTotal MONEY NOT NULL,
 
-  FOREIGN KEY (EmpleadoVentaFK) REFERENCES Empleado(IdEmpleado),
-  FOREIGN KEY (EstadoVentaFK) REFERENCES EstadoVenta(IdEstadoVenta)
-);
+  EmpleadoId NUMERIC(8) NOT NULL,
+  EstadoId NUMERIC(2) NOT NULL,
+
+  FOREIGN KEY (EmpleadoId) REFERENCES Empleado(Id),
+  FOREIGN KEY (EstadoId) REFERENCES EstadoVenta(Id)
+)
 GO
 
 -- Creacion de la tabla de pedidos
 CREATE TABLE Pedido (
-  IdPedido NUMERIC(5) IDENTITY(1,1) PRIMARY KEY NOT NULL,
-  CantidadPedido NUMERIC(2) NOT NULL,
-  PrecioTotalPedido MONEY NOT NULL,
-  MenuPedidoFK NUMERIC(2) NOT NULL,
-  VentaPedidoFK NUMERIC(6) NOT NULL,
+  Id NUMERIC(8) PRIMARY KEY,
+  Cantidad NUMERIC(2) NOT NULL,
+  PrecioTotal MONEY NOT NULL,
+  Descuento MONEY DEFAULT NULL,
 
-  FOREIGN KEY (MenuPedidoFK) REFERENCES Menu(IdMenu),
-  FOREIGN KEY (VentaPedidoFK) REFERENCES Venta(IdVenta)
-);
+  MenuId NUMERIC(2) NOT NULL,
+  VentaId NUMERIC(8) NOT NULL,
+
+  FOREIGN KEY (MenuId) REFERENCES Menu(Id),
+  FOREIGN KEY (VentaId) REFERENCES Venta(Id)
+)

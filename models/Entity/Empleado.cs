@@ -4,21 +4,21 @@ using System.Collections.Generic;
 namespace models.Entity {
   public partial class Empleado {
     public Empleado() {
-      Venta = new HashSet<Venta>();
+      Ventas = new HashSet<Venta>();
     }
 
-    public decimal IdEmpleado { get; set; }
-    public string ClaveEmpleado { get; set; }
-    public DateTime FechaContratoEmpleado { get; set; }
-    public decimal DatosEmpleadoFk { get; set; }
-    public decimal RolEmpleadoFk { get; set; }
-    public decimal SedeEmpleadoFk { get; set; }
-    public decimal EstadoEmpleadoFk { get; set; }
+    public decimal Id { get; set; }
+    public string Contrasena { get; set; }
+    public string Cargo { get; set; }
+    public string EstadoActual { get; set; }
+    public decimal Salario { get; set; }
+    public string TipoContrato { get; set; }
+    public DateTime FechaContratacion { get; set; }
+    public decimal PersonaId { get; set; }
+    public decimal RestauranteId { get; set; }
 
-    public virtual Datos DatosEmpleadoFkNavigation { get; set; }
-    public virtual EstadoEmpleado EstadoEmpleadoFkNavigation { get; set; }
-    public virtual Rol RolEmpleadoFkNavigation { get; set; }
-    public virtual Sede SedeEmpleadoFkNavigation { get; set; }
-    public virtual ICollection<Venta> Venta { get; set; }
+    public virtual Persona Persona { get; set; }
+    public virtual Restaurante Restaurante { get; set; }
+    public virtual ICollection<Venta> Ventas { get; set; }
   }
 }

@@ -4,12 +4,13 @@ using System.Collections.Generic;
 namespace models.Entity {
   public partial class Categoria {
     public Categoria() {
-      Menu = new HashSet<Menu>();
+      Menus = new HashSet<Menu>();
     }
 
-    public decimal IdCategoria { get; set; }
-    public string NombreCategoria { get; set; }
+    public decimal Id { get; set; }
+    public string Nombre { get; set; }
+    public string Descripcion { get; set; }
 
-    public virtual ICollection<Menu> Menu { get; set; }
+    public virtual ICollection<Menu> Menus { get; set; }
   }
 }

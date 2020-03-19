@@ -9,8 +9,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "frontend", "frontend\fronte
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "models", "models\models.csproj", "{08CF2DBD-9335-4C15-A587-C17BFE1E93E2}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "services", "services\services.csproj", "{D6D95EA1-73E5-4409-A1AC-54E26BCAB293}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -29,10 +27,6 @@ Global
 		{08CF2DBD-9335-4C15-A587-C17BFE1E93E2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{08CF2DBD-9335-4C15-A587-C17BFE1E93E2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{08CF2DBD-9335-4C15-A587-C17BFE1E93E2}.Release|Any CPU.Build.0 = Release|Any CPU
-		{D6D95EA1-73E5-4409-A1AC-54E26BCAB293}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D6D95EA1-73E5-4409-A1AC-54E26BCAB293}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D6D95EA1-73E5-4409-A1AC-54E26BCAB293}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D6D95EA1-73E5-4409-A1AC-54E26BCAB293}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

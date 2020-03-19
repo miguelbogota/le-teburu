@@ -3,6 +3,15 @@ import React, { Component } from 'react'
 import Usuario from './Usuario';
 
 export default class Usuarios extends Component {
+
+  constructor(props) {
+    super(props)
+    
+    this.users = this.props.users.map((usuario) =>
+      <Usuario key={usuario.id} cedula={usuario.persona.documento} nombre={usuario.persona.nombre} cargo={usuario.cargo} />
+    );
+  }
+
   render() {
     return (
       <div>
@@ -17,8 +26,8 @@ export default class Usuarios extends Component {
           </div>
         </div>
 
-        <Usuario cedula={1234567} nombre={"Migruel Angel Bogota Rico"} cargo={"Jefe"} />
-        <Usuario cedula={7654321} nombre={"Johan Sebastian Piza Acosta"} cargo={"Gerente"} />
+        { this.users }
+
       </div>
     )
   }

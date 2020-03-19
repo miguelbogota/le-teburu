@@ -5,18 +5,17 @@ namespace models.Entity {
   public partial class Menu {
     public Menu() {
       Pedido = new HashSet<Pedido>();
-      Producto = new HashSet<Producto>();
+      Productos = new HashSet<Producto>();
     }
 
-    public decimal IdMenu { get; set; }
-    public string NombreMenu { get; set; }
-    public decimal PrecioMenu { get; set; }
-    public decimal CategoriaMenuFk { get; set; }
-    public decimal EstadoMenuFk { get; set; }
+    public decimal Id { get; set; }
+    public string Nombre { get; set; }
+    public decimal Precio { get; set; }
+    public string Estado { get; set; }
+    public decimal CategoriaId { get; set; }
 
-    public virtual Categoria CategoriaMenuFkNavigation { get; set; }
-    public virtual EstadoMenu EstadoMenuFkNavigation { get; set; }
+    public virtual Categoria Categoria { get; set; }
     public virtual ICollection<Pedido> Pedido { get; set; }
-    public virtual ICollection<Producto> Producto { get; set; }
+    public virtual ICollection<Producto> Productos { get; set; }
   }
 }

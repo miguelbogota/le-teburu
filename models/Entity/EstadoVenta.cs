@@ -4,12 +4,13 @@ using System.Collections.Generic;
 namespace models.Entity {
   public partial class EstadoVenta {
     public EstadoVenta() {
-      Venta = new HashSet<Venta>();
+      Ventas = new HashSet<Venta>();
     }
 
-    public decimal IdEstadoVenta { get; set; }
-    public string NombreEstadoVenta { get; set; }
+    public decimal Id { get; set; }
+    public string Nombre { get; set; }
+    public string Descripcion { get; set; }
 
-    public virtual ICollection<Venta> Venta { get; set; }
+    public virtual ICollection<Venta> Ventas { get; set; }
   }
 }

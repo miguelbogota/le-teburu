@@ -1,52 +1,39 @@
 import React, { Component } from 'react'
-
+import axios from 'axios';
 import Registro from './Registro';
 import Usuarios from './Usuarios';
 
 export default class Admin extends Component {
 
-  constructor (props){
+  constructor(props) {
     super(props)
-  
-    console.log("constructor")
 
-    this.state ={
-      Registro: [],
-      Usuarios: []
+    this.state = {
+      empleados: [],
+      isFetch: true
     }
   }
 
-
-  componentDidMount (){
-    fetch ('')
-    .then(Response => Response.json())
-    .then (RegistroJson => this.setState({Registro: RegistroJson.result}))
-  }
-
-  componentDidMount (){
-    fetch ('')
-    .then(Response => Response.json())
-    .then (UsuariosJson => this.setState({Usuarios: UsuariosJson.result}))
-  }
-  
-  componentDidUpdate (){
-    console.log ('update')
+  componentDidMount() {
+    axios.get("https://localhost:44387/api/employees")
+      .then(res => this.setState({ empleados: res.data, isFetch: false }));
   }
 
   render() {
+    if (this.state.isFetch) { return 'Cargando...' }
 
     return (
       <div className="container">
 
-
         <div className="row mt-3 mt-md-5">
 
           <div className="bg-white border rounded p-3 col-md-5">
-            <This.state.Registro.map((Registro)=><Registro name = {Registro.displayname}/>)  />
+
+            <Registro />
           </div>
 
           <div className="col-sm-7">
-            <this.state.Usuarios.map((Usuarios)=><Usuarios usu = {Usuarios.displayname}/>) />
+            <Usuarios users={this.state.empleados} />
           </div>
         </div>
       </div>
