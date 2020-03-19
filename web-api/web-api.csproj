@@ -18,7 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\models\CapaModelo.csproj" />
+    <ProjectReference Include="..\models\models.csproj" />
   </ItemGroup>
 
 
