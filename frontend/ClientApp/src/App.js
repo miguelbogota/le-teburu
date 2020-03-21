@@ -5,8 +5,10 @@ import { BrowserRouter as Router, Route } from 'react-router-dom';
 import Navigation from './components/shared/Navigation';
 import Home from './components/Home/Home';
 import Login from './components/Login';
-import Admin from './components/Admin/Admin';
+import Registro from './components/Registro/Registro';
+import AdminEmpleados from './components/Admin/AdminEmpleados/AdminEmpleados';
 import Inventario from './components/Inventario/Inventario';
+
 export default class App extends Component {
   render() {
     return (
@@ -17,8 +19,9 @@ export default class App extends Component {
 
           <Route path="/" component={ Home } exact />
           <Route path="/login" component={ Login } />
-          <Route path="/admin" component={ Admin } />
-          <Route path="/Inventario" component={ Inventario } />
+          <Route path="/registro" component={ Registro } />
+          <Route path="/admin" component={ AdminEmpleados } />
+          <Route path="/inventario" component={ Inventario } />
         </Router>
       </div>
     )

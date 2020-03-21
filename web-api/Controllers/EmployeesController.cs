@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -49,6 +50,48 @@ namespace web_api.Controllers {
       }
     }
 
+    // POST- Ruta     /api/inventory
+    // Funcion agrega un nuevo empleado
+    [HttpPost]
+    public async Task<ActionResult<Empleado>> PostEmployee(Empleado empleado) {
+      // Usar base de datos
+      using (DBContext db = new DBContext()) {
+        db.Empleado.Add(empleado);
+        await db.SaveChangesAsync();
+        return CreatedAtAction("GetEmployee", new { id = empleado.Id }, empleado);
+      }
+    }
+
+    // DELETE- Ruta     /api/employees/id
+    // Funcion elimina un dato del empleado en la db con el id
+    [HttpDelete("{id}")]
+    public async Task<ActionResult<Empleado>> DeleteEmployee(decimal id) {
+      // Usar base de datos
+      using (DBContext db = new DBContext()) {
+        // Buscar empleado
+        Empleado empleado = await db.Empleado
+          .Include(e => e.Persona)
+          .Where(e => e.Id == id)
+          .FirstOrDefaultAsync();
+        // Guardar datos
+        Persona datos = empleado.Persona;
+        // Validacion si no se encontro el usuario
+        if (empleado == null) { return NotFound(); }
+        // Eliminar el usuario y datos
+        db.Empleado.Remove(empleado);
+        db.Persona.Remove(datos);
+        // Guardar datos
+        await db.SaveChangesAsync();
+        return empleado;
+      }
+    }
+
+    // Funcion para validar si exite record en db
+    private bool EmpleadoExists(decimal id) {
+      using (DBContext db = new DBContext()) {
+        return db.Empleado.Any(e => e.Id == id);
+      }
+    }
 
   }
 

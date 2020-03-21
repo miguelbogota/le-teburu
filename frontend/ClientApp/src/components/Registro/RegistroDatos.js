@@ -1,35 +1,73 @@
-import React, { Component } from 'react'
+import React from 'react'
+import { useForm } from 'react-hook-form';
 
-export default class Registro extends Component {
- 
+export default function RegistroDatos() {
 
-  
-  render() {
-    return (
-      <div>
-        <h3>Registro</h3>
+  // Funcion para hacer el registro
+  const onSubmit = (data) => {
+    console.log(data);
+  }
 
-        <h3>Datos Personales</h3>
+  const { register, handleSubmit, errors } = useForm();
 
+  return (
+    <div>
+
+      <h3>Registro</h3>
+      <h3>Datos Personales</h3>
+
+      <form onSubmit={handleSubmit(onSubmit)}>
+
+        {/* Campo para el numero de documento */}
+        <div className="form-group">
+          <label className="control-label">Documento</label>
+          <input type="text" className="form-control" name="documento" ref={register({ required: true })} />
+          {errors.documento && (<small className="form-text text-danger">Este campo es requerido.</small>)}
+        </div>
+
+        {/* Campo para el genero */}
+        <div className="form-group">
+          <label className="control-label">Tipo de documento</label>
+          <select className="form-control" name="tipoDocumento" ref={register({ required: true })}>
+            <option value="">Seleccione...</option>
+            <option>Cedula</option>
+            <option>Pasaporte</option>
+            <option>Tarjeta de identidad</option>
+          </select>
+          {errors.tipoDocumento && (<small className="form-text text-danger">Seleccione una opcion.</small>)}
+        </div>
+
+        {/* Campo para el nombre */}
         <div className="form-group">
           <label className="control-label">Nombre</label>
-          <input type="text" className="form-control" id="nombre_id" name="Nombre" />
+          <input type="text" className="form-control" name="nombre" ref={register({ required: true })} />
+          {errors.nombre && (<small className="form-text text-danger">Este campo es requerido.</small>)}
         </div>
-        
+
+        {/* Campo para el apellido */}
         <div className="form-group">
-          <label htmlFor="Genero_id" className="control-label">Genero</label>
-          <select className="form-control" id="Genero_id">
-            <option value="Masculino">Masculino</option>
-            <option value="Femenino">Femenino</option>
-            <option value="Otro">Otro</option>
+          <label className="control-label">Apellido</label>
+          <input type="text" className="form-control" name="apellido" ref={register({ required: true })} />
+          {errors.apellido && (<small className="form-text text-danger">Este campo es requerido.</small>)}
+        </div>
+
+        {/* Campo para el genero */}
+        <div className="form-group">
+          <label className="control-label">Genero</label>
+          <select className="form-control" name="genero" ref={register({ required: true })}>
+            <option value="">Seleccione...</option>
+            <option value="M">Masculino</option>
+            <option value="F">Femenino</option>
+            <option value="O">Otro</option>
           </select>
+          {errors.genero && (<small className="form-text text-danger">Seleccione una opcion.</small>)}
         </div>
-        
+
         <div className="form-group">
-          <label htmlFor="id" className="control-label">Numero de documento</label>
-          <input type="text" className="form-control" id="id" name="nDocumento" />
+          <label className="control-label">Numero de documento</label>
+          <input type="text" className="form-control" />
         </div>
-        
+
         <div className="form-group">
           <label htmlFor="tDocumento_id" className="control-label">Tipo de documento</label>
           <select className="form-control" id="tDocumento_id">
@@ -38,7 +76,7 @@ export default class Registro extends Component {
             <option value="Pasaporte">Pasaporte</option>
           </select>
         </div>
-        
+
         <div className="form-group">
           <label className="control-label">Fecha de nacimiento</label>
           <input type="text" className="form-control" id="edad_id" name="Edad" />
@@ -99,12 +137,9 @@ export default class Registro extends Component {
           <button type="submit" className="btn btn-primary">Guardar</button>
         </div>
 
-        <div className="form-group">
-          <button type="submit" className="btn btn-primary">Inventario</button>
-        </div>
+      </form>
 
-      </div>
-    )
-  }
+    </div>
+  )
 }
 
