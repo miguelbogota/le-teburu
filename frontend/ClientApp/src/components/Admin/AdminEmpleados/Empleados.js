@@ -24,7 +24,7 @@ export default class Empleados extends Component {
 
   // Funcion para obtener la info de la API
   refrescarAPI = () => {
-    axios.get("https://localhost:44387/api/employees")
+    axios.get("https://localhost/api/employees")
       .then(res => this.setState({ empleados: res.data, isFetch: false }));
   }
 

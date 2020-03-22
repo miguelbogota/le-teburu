@@ -7,7 +7,8 @@ import Home from './components/Home/Home';
 import Login from './components/Login';
 import Registro from './components/Registro/Registro';
 import AdminEmpleados from './components/Admin/AdminEmpleados/AdminEmpleados';
-import Inventario from './components/Inventario/Inventario';
+import Inventario from './components/Admin/AdminInventario/AdminInventarios'
+
 
 export default class App extends Component {
   render() {

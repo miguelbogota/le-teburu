@@ -13,7 +13,7 @@ export default class Empleado extends Component {
 
   // Funcion borra un record desde la api
   eliminarEmpleado = (id) => {
-    axios.delete(`https://localhost:44387/api/employees/${id}`)
+    axios.delete(`https://localhost/api/employees/${id}`)
       .then(res => this.props.deleteItem(id));
   }
 
