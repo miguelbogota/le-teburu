@@ -13,3 +13,4 @@ export default (target, ctx = {}) => {
     // de redireccionamiento.
     Router.replace(target);
   }
+}  
