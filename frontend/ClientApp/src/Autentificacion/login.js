@@ -1,11 +1,11 @@
 import { Component } from "react";
 import Link from "next/link";
-import App from "../../components/App";
-import Header from "../../components/Header";
-import Success from "../../components/Success";
-import Error from "../../components/Error";
-import { getCookie, removeCookie } from "../../lib/session";
-import { signIn, redirectIfAuthenticated } from "../../lib/auth";
+//import App from "../../components/App";
+//import Header from "../../components/Header";
+//import Success from "../../components/Success";
+//import Error from "../../components/Error";
+import { getCookie, removeCookie } from "./secion";
+import { signIn, redirectIfAuthenticated } from "./Autentificacion";
 
 export default class Login extends Component {
   constructor(props) {
@@ -48,9 +48,10 @@ export default class Login extends Component {
           <button type="submit">Submit</button>
         </form>
 
+        //modificar linea de codigo de registro
         <p>
           {"Don't have a user? "}
-          <Link prefetch href="/register">
+          <Link prefetch href="../../Registro/Registro">
             <a>Register</a>
           </Link>
         </p>

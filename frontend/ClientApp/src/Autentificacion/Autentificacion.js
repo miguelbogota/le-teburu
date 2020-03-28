@@ -1,7 +1,7 @@
 import redirect from "./redirect";
-import { setCookie, getCookie, removeCookie } from "./session";
-import { authenticate } from "../services/authApi";
-import { createUser } from "../services/userApi";
+import { setCookie, getCookie, removeCookie } from "./secion";
+import { authenticate } from "./AuthApi";
+import { createUser } from "./UserApi";
 import { validateCredentials, validateNewUser } from "./validation";
 
 // Iniciar sesión
@@ -15,7 +15,7 @@ export const signIn = async (email, password) => {
   if (!res.jwt) {
     return res;
   }
-
+  //modificar linea de codigo a usuario
   setCookie("jwt", res.jwt);
   redirect("/user");
   return null;
@@ -35,7 +35,7 @@ export const signUp = async (name, email, password, password_confirmation) => {
   }
 
   setCookie("success", `${name}, your account was created.`);
-  redirect("/auth/login");
+  redirect("/login");
   return null;
 };
 
@@ -43,7 +43,7 @@ export const signUp = async (name, email, password, password_confirmation) => {
 export const signOut = (ctx = {}) => {
   if (process.browser) {
     removeCookie("jwt");
-    redirect("/auth/login", ctx);
+    redirect("/login", ctx);
   }
 };
 
@@ -55,7 +55,8 @@ export const getJwt = ctx => {
 // Verificamos si estamos autenticados
 export const isAuthenticated = ctx => !!getJwt(ctx);
 
-// Redireccionar si ya estamos autenticados
+// Redireccionar si ya estamos autenticados 
+//modificar linea de codigo a usuario
 export const redirectIfAuthenticated = ctx => {
   if (isAuthenticated(ctx)) {
     redirect("/user", ctx);
@@ -67,7 +68,7 @@ export const redirectIfAuthenticated = ctx => {
 // Verificamos si aún no estamos autenticados
 export const redirectIfNotAuthenticated = ctx => {
   if (!isAuthenticated(ctx)) {
-    redirect("/auth/login", ctx);
+    redirect("/login", ctx);
     return true;
   }
   return false;
