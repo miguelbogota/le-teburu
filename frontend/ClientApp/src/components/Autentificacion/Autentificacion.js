@@ -1,17 +1,17 @@
 import redirect from "./redirect";
-import { setCookie, getCookie, removeCookie } from "./secion";
+import { setCookie, getCookie, removeCookie } from "./sesion";
 import { authenticate } from "./AuthApi";
 import { createUser } from "./UserApi";
 import { validateCredentials, validateNewUser } from "./validation";
 
 // Iniciar sesión
-export const signIn = async (email, password) => {
-  const error = validateCredentials(email, password);
+export const signIn = async (correo, clave) => {
+  const error = validateCredentials(correo, clave);
   if (error) {
     return error;
   }
 
-  const res = await authenticate(email, password);
+  const res = await authenticate(correo, clave);
   if (!res.jwt) {
     return res;
   }
@@ -22,20 +22,23 @@ export const signIn = async (email, password) => {
 };
 
 // Registrar nuevos usuarios
-export const signUp = async (name, email, password, password_confirmation) => {
-  const error = validateNewUser(name, email, password, password_confirmation);
+export const signUp = async (documento, tipoDumento, nombre, apellido, genero, fechaNacimiento, 
+  telefono, correo, dirrecion, ciudad, pais,  contraseña, cargo, estadoActual, salario, tipoContrato, fechaContratacion) => {
+  const error = validateNewUser(documento, tipoDumento, nombre, apellido, genero, fechaNacimiento, 
+    telefono, correo, dirrecion, ciudad, pais,  contraseña, cargo, estadoActual, salario, tipoContrato, fechaContratacion);
   if (error) {
     return error;
   }
 
-  const res = await createUser(name, email, password, password_confirmation);
+  const res = await createUser(documento, tipoDumento, nombre, apellido, genero, fechaNacimiento, 
+    telefono, correo, dirrecion, ciudad, pais,  contraseña, cargo, estadoActual, salario, tipoContrato, fechaContratacion);
 
   if (!res.data) {
     return res;
   }
 
-  setCookie("success", `${name}, your account was created.`);
-  redirect("/login");
+  setCookie("success", `${name}, Su cuenta fue creada.`);
+  redirect("./Login");
   return null;
 };
 
@@ -43,7 +46,7 @@ export const signUp = async (name, email, password, password_confirmation) => {
 export const signOut = (ctx = {}) => {
   if (process.browser) {
     removeCookie("jwt");
-    redirect("/login", ctx);
+    redirect("/Login", ctx);
   }
 };
 
@@ -59,7 +62,7 @@ export const isAuthenticated = ctx => !!getJwt(ctx);
 //modificar linea de codigo a usuario
 export const redirectIfAuthenticated = ctx => {
   if (isAuthenticated(ctx)) {
-    redirect("/user", ctx);
+    redirect("/Admin", ctx);
     return true;
   }
   return false;
