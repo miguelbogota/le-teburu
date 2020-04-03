@@ -10,7 +10,7 @@ namespace models.Entity {
     public decimal MenuId { get; set; }
     public decimal VentaId { get; set; }
 
-    public virtual Menu Menus { get; set; }
+    public virtual Menu Menu { get; set; }
     public virtual Venta Venta { get; set; }
   }
 }

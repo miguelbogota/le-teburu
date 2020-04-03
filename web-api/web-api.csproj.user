@@ -8,7 +8,8 @@
     <WebStackScaffolding_IsPartialViewSelected>False</WebStackScaffolding_IsPartialViewSelected>
     <WebStackScaffolding_IsReferencingScriptLibrariesSelected>True</WebStackScaffolding_IsReferencingScriptLibrariesSelected>
     <WebStackScaffolding_LayoutPageFile />
-    <WebStackScaffolding_DbContextTypeFullName>models.Entity.DBContext</WebStackScaffolding_DbContextTypeFullName>
     <WebStackScaffolding_IsAsyncSelected>False</WebStackScaffolding_IsAsyncSelected>
+    <WebStackScaffolding_DbContextTypeFullName>models.Entity.TeburuDBContext</WebStackScaffolding_DbContextTypeFullName>
+    <WebStackScaffolding_DbContextDialogWidth>600.208695652174</WebStackScaffolding_DbContextDialogWidth>
   </PropertyGroup>
 </Project>

@@ -1,14 +1,14 @@
 ﻿-- Eliminar la sb si existe
 USE master
-IF EXISTS (SELECT * FROM sys.databases WHERE name='teburuDB') DROP DATABASE teburuDB
+IF EXISTS (SELECT * FROM sys.databases WHERE name='TeburuDB') DROP DATABASE TeburuDB
 GO
 
 -- Creacion de la base de datos
-CREATE DATABASE teburuDB
+CREATE DATABASE TeburuDB
 GO
 
 -- Usar la base de datos
-USE teburuDB
+USE TeburuDB
 GO
 
 -- Creacion de la tabla de sedes
@@ -74,6 +74,8 @@ GO
 CREATE TABLE Menu (
   Id NUMERIC(2) IDENTITY(1,1) PRIMARY KEY,
   Nombre NVARCHAR(50) NOT NULL,
+  Descripcion NVARCHAR(255) NOT NULL,
+  ImgUrl NVARCHAR(225) NOT NULL,
   Precio MONEY NOT NULL,
   Estado CHAR(1) NOT NULL,
   CategoriaId NUMERIC(2) NOT NULL,
@@ -84,22 +86,9 @@ GO
 
 -- Creacion de la tabla de proveedor
 CREATE TABLE Proveedor (
-  Id NUMERIC(3) PRIMARY KEY,
+  Id NUMERIC(3) IDENTITY(1,1) PRIMARY KEY,
   Nombre NVARCHAR(50) NOT NULL,
   Telefono NUMERIC(10) NOT NULL
-)
-GO
-
--- Creacion de la tabla de inventario
-CREATE TABLE Inventario (
-  Id NUMERIC(5) IDENTITY(1,1) PRIMARY KEY,
-  FechaIngreso DATE NOT NULL,
-  PrecioTotal MONEY NOT NULL,
-  Cantidad NUMERIC(5) NOT NULL,
-
-  RestauranteId NUMERIC(3) NOT NULL,
-
-  FOREIGN KEY (RestauranteId) REFERENCES Restaurante(Id)
 )
 GO
  
@@ -110,13 +99,26 @@ CREATE TABLE Producto (
   Precio MONEY NOT NULL,
   Estado CHAR(1) NOT NULL,
 
-  MenuId NUMERIC(2),
+  MenuId NUMERIC(2) DEFAULT NULL,
   ProveedorId NUMERIC(3) NOT NULL,
-  InventarioId NUMERIC(5) NOT NULL,
 
   FOREIGN KEY (MenuId) REFERENCES Menu(Id),
-  FOREIGN KEY (ProveedorId) REFERENCES Proveedor(Id),
-  FOREIGN KEY (InventarioId) REFERENCES Inventario(ID)
+  FOREIGN KEY (ProveedorId) REFERENCES Proveedor(Id)
+)
+GO
+
+-- Creacion de la tabla de inventario
+CREATE TABLE Inventario (
+  Id NUMERIC(5) IDENTITY(1,1) PRIMARY KEY,
+  FechaIngreso DATE NOT NULL,
+  PrecioTotal MONEY NOT NULL,
+  Cantidad NUMERIC(5) NOT NULL,
+
+  ProductoId NUMERIC(3) NOT NULL,
+  RestauranteId NUMERIC(3) NOT NULL,
+
+  FOREIGN KEY (ProductoId) REFERENCES Producto(Id),
+  FOREIGN KEY (RestauranteId) REFERENCES Restaurante(Id)
 )
 GO
 
