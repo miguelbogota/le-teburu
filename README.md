@@ -9,11 +9,15 @@ Es una franquisia de restaurantes dentro de la zona de Bogotá.
 
 ## Caracteristicas
 
-* [ASP.NET](https://dotnet.microsoft.com/apps/aspnet) - Plataforma web.
-* [Oracle](https://www.oracle.com/index.html) - Motor de base de datos.
-* [Bootstrap](https://getbootstrap.com/) - Framework CSS
+* [ASP.NET Core 3.1](https://dotnet.microsoft.com/apps/aspnet) - Plataforma web.
+* [Entity FrameWork](https://docs.microsoft.com/en-us/ef/) - ORM.
+* [SQL Server](https://www.microsoft.com/en-us/sql-server/sql-server-2019) - Motor de base de datos.
+* [React](https://reactjs.org/) - Librería de interfaz de usuario.
+* [Material UI](https://material-ui.com/) - Librería de diseños UI.
 
-[Estandarización de código.](https://github.com/miguelbogota/le-teburu/blob/master/CODIGO.md)
+## Adicional
+
+Puedes ver la [Estandarización de código](https://github.com/miguelbogota/le-teburu/blob/master/CODIGO.md) que se usó a lo largo de este proyecto con la [lista de funciones](https://github.com/miguelbogota/le-teburu/blob/master/TODO.md) en las cuales se trabajaron.
 
 ## Autores
 
